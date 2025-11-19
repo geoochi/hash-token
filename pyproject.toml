@@ -1,0 +1,16 @@
+[project]
+name = "hash-token"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "flask>=3.1.2",
+    "ipykernel>=7.1.0",
+    "pyjwt>=2.10.1",
+    "python-dotenv>=1.2.1",
+]
+
+[[tool.uv.index]]
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+default = true
