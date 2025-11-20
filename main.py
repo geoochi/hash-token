@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session, request, redirect, url_for
+from flask import Flask, render_template, session, request, redirect, url_for, abort
 import os
 from dotenv import load_dotenv
 import json
@@ -15,9 +15,21 @@ app.secret_key = os.environ['FLASK_SECRET_KEY']
 
 @app.route('/')
 def index():
+    return templates('')
+
+
+@app.route('/<path:filename>')
+def templates(filename: str):
+    file_path = os.path.join('templates', filename)
+    if not os.path.exists(file_path):
+        abort(404)
+
     params = request.args
     if session.get('verified', False):
-        return render_template('index.html')
+        if filename == '':
+            return render_template('index.html')
+        else:
+            return render_template(filename)
     else:
         hash = params.get('hash', None)
         if hash is None:
