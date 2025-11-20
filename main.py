@@ -21,7 +21,7 @@ def index():
     else:
         hash = params.get('hash', None)
         if hash is None:
-            return render_template('error.html', msg='403 error')
+            return render_template('error.html', msg='403 error'), 403
         elif hash in kv:
             if not kv[hash]:
                 kv[hash] = True
@@ -29,9 +29,9 @@ def index():
                 session['verified'] = True
                 return redirect(url_for('index'))
             else:
-                return render_template('error.html', msg='403 error: hash used')
+                return render_template('error.html', msg='403 error: hash used'), 403
         else:
-            return render_template('error.html', msg='403 error: hash invalid')
+            return render_template('error.html', msg='403 error: hash invalid'), 403
 
 
 @app.route('/api')
@@ -39,7 +39,7 @@ def api():
     if session.get('verified', False):
         return {'msg': 'ok'}
     else:
-        return {'msg': '403'}, 400
+        return {'msg': '403'}, 403
 
 
 if __name__ == '__main__':
