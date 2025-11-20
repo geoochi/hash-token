@@ -34,5 +34,13 @@ def index():
             return render_template('error.html', msg='403 error: hash invalid')
 
 
+@app.route('/api')
+def api():
+    if session.get('verified', False):
+        return {'msg': 'ok'}
+    else:
+        return {'msg': '403'}, 400
+
+
 if __name__ == '__main__':
     app.run(port=5002)
